@@ -1,5 +1,5 @@
 import { subtract, add } from "./calculations";
-import { calIntakeEl, totalBurntEl, netCalEl, exerciseEl, caloriesEl, exerciseListEl, submitBtn, resetBtn } from "./elements";
+import { calIntakeEl, calIntakeEntryEl, totalBurntEl, netCalEl, exerciseEl, caloriesEl, exerciseListEl, submitBtn, resetBtn } from "./elements";
 import { saveExercise, loadExercises, resetExercise } from "./api";
 
 function addToList(name, calories) {
@@ -8,11 +8,13 @@ function addToList(name, calories) {
 }
 
 function submit(e) {
-  console.log(calIntakeEl.innerText);
   e.preventDefault();
+  
+  calIntakeEl.innerText = calIntakeEntryEl.value;
   console.log(calIntakeEl.innerText);
-  const total = subtract(Number(calIntakeEl.innerText), caloriesEl.value);
-  totalBurntEl.innerText = add(Number(totalBurntEl.innerText), caloriesEl.value);
+  const total = subtract(Number(calIntakeEl.innerText), Number(caloriesEl.value));
+  
+  totalBurntEl.innerText = add(Number(totalBurntEl.innerText), Number(caloriesEl.value));
   netCalEl.innerText = total;
   addToList(exerciseEl.value, caloriesEl.value);
   let data = {"exercise": exerciseEl.value, "calories": caloriesEl.value};
@@ -32,7 +34,11 @@ submitBtn.onclick = submit;
 resetBtn.onclick = reset;
 
 loadExercises().then(function(results) {
-  results.forEach(function(exercise,calories){
-    addToList(exercise, calories);
-  })
+  console.log(results);
+  for (var i = 0; i < results.length; i ++){
+    addToList(results[i].exercise, results[i].calories);   
+  }
+  // results.forEach(function(exercise,calories){
+  //   addToList(exercise, calories);
+  // })
 });

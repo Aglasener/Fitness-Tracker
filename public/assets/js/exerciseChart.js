@@ -1,6 +1,5 @@
-const Chart = require("chart.js");
 import { loadExercises } from "./api";
-import { response } from "express";
+
 
 const ctx = document.getElementById("myChart").getContext("2d");
 export const exerciseChart = new Chart(ctx, {
@@ -65,6 +64,9 @@ export function resetChart(exerciseChart) {
 
 loadExercises().then(function(results) {
   console.log(results);
+  for (var i = 0; i < results.length; i ++){
+    updateChart(exerciseChart, results[i].exercise, results[i].calories);   
+  }
 //   JSON.stringify(response).then(function(data) {
   
 //   data.forEach(function(exercise,calories){
