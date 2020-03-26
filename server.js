@@ -12,7 +12,7 @@ require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/FitnessTracker",
+  process.env.MONGODB_URI || "mongodb://<user1>:<password1>@ds163757.mlab.com:63757/heroku_5ww5mg8x",
   { useNewUrlParser: true,
     useUnifiedTopology: true }
 );
